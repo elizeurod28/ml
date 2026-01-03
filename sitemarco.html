@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Para Minha Princesa 🤍</title>
+
+<style>
+:root{
+  --bg-dark:#05070a;
+  --bg-card:#0f1218;
+  --white:#ffffff;
+  --muted:#b6bcc6;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+  height:100%;
+  font-family:Inter, system-ui, Arial;
+  background:linear-gradient(180deg,#05070a,#0b0f14);
+  color:var(--white);
+}
+
+/* ===== LOGIN ===== */
+.login-container{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(600px 300px at 50% 30%, rgba(255,255,255,0.05), transparent),
+    linear-gradient(180deg,#05070a,#0b0f14);
+}
+
+.login-box{
+  background:rgba(15,18,24,0.95);
+  padding:34px;
+  width:320px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 10px 40px rgba(0,0,0,.8);
+  text-align:center;
+}
+
+.login-box h2{ margin-bottom:20px; font-size:22px; }
+
+.login-box input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border:none;
+  border-radius:10px;
+  background:#1a1e26;
+  color:#fff;
+}
+
+.login-box button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(90deg,#fff,#ddd);
+  color:#0b0f14;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+}
+.login-box button:hover{transform:scale(1.03)}
+
+.error{ margin-top:10px; color:#ff6b6b; font-size:14px; }
+
+/* ===== SITE ===== */
+.container{
+  display:none;
+  max-width:980px;
+  margin:40px auto;
+  padding:28px;
+  background:rgba(15,18,24,0.9);
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 10px 40px rgba(0,0,0,.8);
+}
+
+header{ display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+
+.avatar{
+  width:90px;
+  height:90px;
+  border-radius:16px;
+  background:#fff;
+  color:#0b0f14;
+  font-weight:800;
+  font-size:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+header h1{margin:0}
+.lead{color:var(--muted);margin-top:6px}
+
+.logout-btn{
+  margin-left:auto;
+  background:rgba(255,255,255,0.08);
+  border:none;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+nav{ display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
+
+nav button{
+  flex:1 1 120px;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#1a1e26;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+nav button.active{ background:#fff; color:#0b0f14; }
+
+.tab{display:none}
+.tab.active{display:block}
+
+.message{
+  margin-top:20px;
+  background:#1a1e26;
+  padding:20px;
+  border-radius:14px;
+  line-height:1.7;
+  color:#e4e8ee;
+}
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+  margin-top:20px;
+}
+
+.photo{ aspect-ratio:1/1; overflow:hidden; border-radius:12px; }
+.photo img{ width:100%; height:100%; object-fit:cover; }
+
+.videos{ margin-top:20px; text-align:center; }
+
+iframe{
+  width:100%;
+  height:360px;
+  border:none;
+  border-radius:14px;
+}
+
+.video-controls{
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+}
+
+.video-controls button{
+  padding:10px 14px;
+  border:none;
+  border-radius:10px;
+  background:#fff;
+  color:#0b0f14;
+  font-weight:700;
+  cursor:pointer;
+}
+
+footer{
+  margin-top:30px;
+  color:var(--muted);
+  font-size:13px;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="clickSound" src="click.mp3" preload="auto"></audio>
+
+<div class="login-container" id="loginPage">
+  <div class="login-box">
+    <h2>Bem-vinda Minha Princesa 🤍</h2>
+    <input type="email" id="email" placeholder="E-mail">
+    <input type="password" id="password" placeholder="Senha">
+    <button onclick="login()">Entrar</button>
+    <div id="errorMsg" class="error"></div>
+  </div>
+</div>
+
+<div class="container" id="mainPage">
+<header>
+  <div class="avatar">M🤍L</div>
+  <div>
+    <h1>Bem vinda minha princesa</h1>
+    <p class="lead">FIZ ESSE SITE COM MUITO CARINHO PRA VOCE SE LEMBRAR MAIS UMA VEZ O QUANTO EU TE AMO🤍</p>
+  </div>
+  <button class="logout-btn" onclick="playClick();logout()">Sair</button>
+</header>
+
+<nav>
+  <button class="active" onclick="playClick();showTab('mensagem',this)">💌 Cartinha</button>
+  <button onclick="playClick();showTab('fotos',this)">📸 Fotos</button>
+  <button onclick="playClick();showTab('videos',this)">🎬 Vídeos</button>
+</nav>
+
+<div id="mensagem" class="tab active">
+  <div class="message">
+    Ei meu amor🤍 quero te lembrar assim como todos os dias que voce é o melhor presente que papai do céu colocou na minha vida, compartilhar ela com voce é o meu maior privilégio. Eu te amo MUITOOOOOOOOOOOOOOOOOOOOOOOOOOOO🤍✨💞
+  </div>
+</div>
+
+<div id="fotos" class="tab">
+  <div class="gallery">
+    <div class="photo"><img src="https://i.ibb.co/qLxKZ98c/Whats-App-Image-2026-01-03-at-14-47-15.jpg"></div>
+    <div class="photo"><img src="https://i.ibb.co/s9VLZQPK/Whats-App-Image-2026-01-03-at-14-47-46.jpg"></div>
+    <div class="photo"><img src="https://i.ibb.co/GBfMBk6/Whats-App-Image-2026-01-03-at-14-47-54.jpg"></div>
+    <div class="photo"><img src="https://i.ibb.co/j1gGk9S/Whats-App-Image-2026-01-03-at-14-48-15.jpg"></div>
+    <div class="photo"><img src="https://i.ibb.co/q34rNd7C/Whats-App-Image-2026-01-03-at-14-48-38.jpg"></div>
+    <div class="photo"><img src="https://i.ibb.co/r2bR862J/Whats-App-Image-2026-01-03-at-14-49-09.jpg"></div>
+    <div class="photo"><img src="https://i.ibb.co/7xMBXKHg/Whats-App-Image-2026-01-03-at-14-51-23.jpg"></div>
+    <div class="photo"><img src="https://i.ibb.co/Y78Z3s08/Whats-App-Image-2026-01-03-at-14-46-22.jpg"></div>
+    <div class="photo"><img src="https://i.ibb.co/cSG5Y6t2/Whats-App-Image-2026-01-03-at-14-46-51.jpg"></div>
+  </div>
+</div>
+
+<div id="videos" class="tab">
+  <div class="videos">
+    <iframe id="videoFrame" src="https://www.youtube.com/embed/xy6tczy1iwM" allowfullscreen></iframe>
+    <div class="video-controls">
+      <button onclick="playClick();prevVideo()">◀</button>
+      <button onclick="playClick();nextVideo()">▶</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>Feito com carinho para o amor da minha vida💞🤍Com muito amor</div>
+  <div>Marco</div>
+</footer>
+</div>
+
+<script>
+const EMAIL="minhaprincesa@gmail.com";
+const PASSWORD="07102025";
+
+// Lista de vídeos corrigida (O segundo vídeo foi trocado por um que funciona)
+const videos=[
+  "https://www.youtube.com/embed/xy6tczy1iwM",
+
+];
+
+const clickSound=document.getElementById("clickSound");
+let soundReady=false;
+document.addEventListener("click",()=>soundReady=true,{once:true});
+
+function playClick(){
+  if(soundReady && clickSound){
+    clickSound.currentTime=0;
+    clickSound.play().catch(()=>{});
+  }
+}
+
+function login(){
+  playClick();
+  const e=document.getElementById("email").value;
+  const p=document.getElementById("password").value;
+  if(e===EMAIL && p===PASSWORD){
+    document.getElementById("loginPage").style.display="none";
+    document.getElementById("mainPage").style.display="block";
+    sessionStorage.setItem("logged","true");
+  }else{
+    document.getElementById("errorMsg").textContent="E-mail ou senha incorretos 🤍";
+  }
+}
+
+function logout(){
+  sessionStorage.removeItem("logged");
+  location.reload();
+}
+
+window.onload=()=>{
+  if(sessionStorage.getItem("logged")==="true"){
+    document.getElementById("loginPage").style.display="none";
+    document.getElementById("mainPage").style.display="block";
+  }
+};
+
+let current=0;
+function updateVideo(){
+  const frame = document.getElementById("videoFrame");
+  frame.src = videos[current];
+}
+
+function nextVideo(){
+  current=(current+1)%videos.length;
+  updateVideo();
+}
+
+function prevVideo(){
+  current=(current-1+videos.length)%videos.length;
+  updateVideo();
+}
+
+function showTab(id,btn){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+}
+</script>
+
+</body>
+</html>
